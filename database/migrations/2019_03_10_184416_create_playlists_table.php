@@ -17,8 +17,10 @@ class CreatePlaylistsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('song_id');
-            $table->string('name');
-            $table->timestamps();
+            $table->string('name')->unique();
+            $table->timestamp('created_at')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('song_id')->references('id')->on('tracks')->onDelete('cascade');
         });
     }
 

@@ -18,9 +18,11 @@ class CreateTracksTable extends Migration
             $table->integer('user_id');
             $table->integer('album_id');
             $table->integer('genre_id');
-            $table->string('title');
-            $table->integer('ratings');
-            $table->timestamps();
+            $table->string('title')->unique();
+            $table->integer('ratings')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('album_id')->references('id')->on('albums')->onDelete('cascade');
         });
     }
 

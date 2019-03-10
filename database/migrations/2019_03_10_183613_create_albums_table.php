@@ -16,9 +16,10 @@ class CreateAlbumsTable extends Migration
         Schema::create('albums', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
-            $table->string('name');
-            $table->string('released_on');
-            $table->timestamps();
+            $table->string('name')->unique('id', 'user_id');
+            $table->year('released_on')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
