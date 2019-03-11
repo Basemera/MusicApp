@@ -18,7 +18,6 @@ Route::get('/user', function (Request $request) {
     return "Memmmmmme";
 });
 
-Route::get('/user/register', function (Request $request) {
-//    var_dump(($request));
-    return "kkkkkk";
-});
+Route::post('/user/register', 'UserController@createUser');
+//Route::post('/user/register', 'UserController@createUser');
+
