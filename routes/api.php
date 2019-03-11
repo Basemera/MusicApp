@@ -19,5 +19,5 @@ Route::get('/user', function (Request $request) {
 });
 
 Route::post('/user/register', 'UserController@createUser');
-//Route::post('/user/register', 'UserController@createUser');
+Route::post('/user/login', 'UserController@logIn');
 
