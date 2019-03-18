@@ -19,6 +19,7 @@ class CreateAlbumsTable extends Migration
             $table->string('name')->unique('id', 'user_id');
             $table->year('released_on')->nullable();
             $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
