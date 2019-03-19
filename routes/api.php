@@ -20,4 +20,11 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/user/register', 'UserController@createUser');
 Route::post('/user/login', 'UserController@logIn');
+Route::post('/user/add_album/{id}', 'AlbumController@addAlbum');
+Route::get('/user/album/{id}', 'AlbumController@getAllUserAlbums');
+Route::get('/user/album/details/{id}', 'AlbumController@getSingleAlbum');
+Route::put('/user/album/user/{id}/edit/{album_id}', 'AlbumController@editAlbum');
+Route::delete('/user/album/user/{id}/delete/{album_id}', 'AlbumController@deleteAlbum');
+
+
 
