@@ -15,6 +15,12 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+//    \Cloudinary::config(array(
+//        "cloud_name" => env('CLOUDINARY_CLOUD_NAME', ''),
+//        "api_key" => env('CLOUDINARY_API_KEY', ''),
+//        "api_secret" => env('CLOUDINARY_API_SECRET', '')
+//    )),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -165,6 +171,7 @@ return [
         /*
          * Package Service Providers...
          */
+        'JD\Cloudder\CloudderServiceProvider',
 
         /*
          * Application Service Providers...
@@ -225,6 +232,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Cloudder' => 'JD\Cloudder\Facades\Cloudder',
 
     ],
 

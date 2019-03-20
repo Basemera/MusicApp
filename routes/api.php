@@ -13,6 +13,23 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/user', function (Request $request) {
+//    var_dump(($request));
+    return "Memmmmmme";
 });
+
+Route::post('/user/register', 'UserController@createUser');
+Route::post('/user/login', 'UserController@logIn');
+Route::post('/user/add_album/{id}', 'AlbumController@addAlbum');
+Route::get('/user/album/{id}', 'AlbumController@getAllUserAlbums');
+Route::get('/user/album/details/{id}', 'AlbumController@getSingleAlbum');
+Route::put('/user/album/user/{id}/edit/{album_id}', 'AlbumController@editAlbum');
+Route::delete('/user/album/user/{id}/delete/{album_id}', 'AlbumController@deleteAlbum');
+Route::post('/user/{id}/album/{album_id}/track', 'TrackController@addTrack');
+Route::patch('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@editTrack');
+Route::delete('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@deleteTrack');
+Route::get('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@getSingleTrack');
+
+
+
+
