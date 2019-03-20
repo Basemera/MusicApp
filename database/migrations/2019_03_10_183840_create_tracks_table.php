@@ -17,10 +17,13 @@ class CreateTracksTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id');
             $table->integer('album_id');
-            $table->integer('genre_id');
+//            $table->integer('genre_id')->nullable();
             $table->string('title')->unique();
+            $table->string('url')->unique();
+            $table->string('public_id')->unique();
             $table->integer('ratings')->nullable();
             $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('album_id')->references('id')->on('albums')->onDelete('cascade');
         });
