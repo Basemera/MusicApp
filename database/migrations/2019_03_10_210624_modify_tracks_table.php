@@ -27,6 +27,6 @@ class ModifyTracksTable extends Migration
     public function down()
     {
         Schema::table('tracks', function (Blueprint $table) {
-            $table->dropForeign(['genre_id']);
+            $table->dropForeign('tracks_genre_id_foreign');
         });    }
 }
