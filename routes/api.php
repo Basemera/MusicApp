@@ -29,6 +29,11 @@ Route::post('/user/{id}/album/{album_id}/track', 'TrackController@addTrack');
 Route::patch('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@editTrack');
 Route::delete('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@deleteTrack');
 Route::get('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@getSingleTrack');
+Route::post('/user/{user_id}/playlist', 'PlaylistController@createPlaylist');
+Route::patch('/user/{user_id}/playlist/{playlist_id}', 'PlaylistController@updatePlaylist');
+Route::get('/user/{user_id}/playlist', 'PlaylistController@getAllUserPlaylists');
+Route::get('/user/playlist', 'PlaylistController@getAllPlaylists');
+Route::get('/user/playlist/{id}', 'PlaylistController@getSinglePlaylist');
 
 
 
