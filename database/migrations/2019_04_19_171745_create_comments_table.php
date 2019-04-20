@@ -16,6 +16,8 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('Details');
+            $table->integer('user_id');
+            $table->integer('song_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('song_id')->references('id')->on('tracks')->onDelete('cascade');
             $table->timestamps();
