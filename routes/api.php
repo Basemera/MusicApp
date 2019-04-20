@@ -25,6 +25,22 @@ Route::get('/user/album/{id}', 'AlbumController@getAllUserAlbums');
 Route::get('/user/album/details/{id}', 'AlbumController@getSingleAlbum');
 Route::put('/user/album/user/{id}/edit/{album_id}', 'AlbumController@editAlbum');
 Route::delete('/user/album/user/{id}/delete/{album_id}', 'AlbumController@deleteAlbum');
+Route::post('/user/{id}/album/{album_id}/track', 'TrackController@addTrack');
+Route::patch('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@editTrack');
+Route::delete('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@deleteTrack');
+Route::get('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@getSingleTrack');
+Route::post('/user/{user_id}/playlist', 'PlaylistController@createPlaylist');
+Route::patch('/user/{user_id}/playlist/{playlist_id}', 'PlaylistController@updatePlaylist');
+Route::get('/user/{user_id}/playlist', 'PlaylistController@getAllUserPlaylists');
+Route::get('/user/playlist', 'PlaylistController@getAllPlaylists');
+Route::get('/user/playlist/{id}', 'PlaylistController@getSinglePlaylist');
+Route::post('/user/{user_id}/track/{track_id}/comment', 'CommentsController@createComment');
+Route::get('/user/comment/{comment_id}', 'CommentsController@getSingleComment');
+Route::get('/user/comment/track/{track_id}', 'CommentsController@getTrackComments');
+Route::patch('/user/comment/{comment_id}', 'CommentsController@editSingleComment');
+Route::delete('/user/comment/{comment_id}', 'CommentsController@deleteSingleComment');
+
+
 
 
 

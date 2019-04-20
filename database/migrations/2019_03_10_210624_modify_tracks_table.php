@@ -11,22 +11,23 @@ class ModifyTracksTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::table('tracks', function (Blueprint $table) {
-            $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade');
+   public function up()
+   {
+    //    Schema::table('tracks', function (Blueprint $table) {
+    //        $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade');
 
-        });
-    }
+    //    });
+   }
 
     /**
      * Reverse the migrations.
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::table('tracks', function (Blueprint $table) {
-            $table->dropForeign(['genre_id']);
-        });    }
+   public function down()
+   {
+    //    Schema::table('tracks', function (Blueprint $table) {
+    //        $table->dropForeign(['genre_id']);
+    //    });
+}
 }
