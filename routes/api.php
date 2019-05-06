@@ -39,6 +39,9 @@ Route::get('/user/comment/{comment_id}', 'CommentsController@getSingleComment');
 Route::get('/user/comment/track/{track_id}', 'CommentsController@getTrackComments');
 Route::patch('/user/comment/{comment_id}', 'CommentsController@editSingleComment');
 Route::delete('/user/comment/{comment_id}', 'CommentsController@deleteSingleComment');
+Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
+Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
+
 
 
 
