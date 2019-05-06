@@ -1,15 +1,12 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Model;
 use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
-
-class User extends Model
+class User1 extends Model
 {
     protected $fillable = ['username', 'email', 'password'];
-
     /**
      * Create a new token.
      *
