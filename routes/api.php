@@ -13,24 +13,43 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::group([
+
+    'middleware' => 'api',
+//    'namespace' => 'App\Http\Controllers',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+
+    Route::post('login', 'AuthController@login');
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', 'AuthController@refresh');
+    Route::post('me', 'AuthController@me');
+
+});
+
 Route::get('/user', function (Request $request) {
 //    var_dump(($request));
     return "Memmmmmme";
 });
 
+Route::group(['middleware' => ['jwt.verify']], function() {
+
 Route::post('/user/register', 'UserController@createUser');
-Route::post('/user/login', 'UserController@logIn');
-Route::post('/user/add_album/{id}', 'AlbumController@addAlbum');
+Route::group(['middleware' => ['premium.verify']], function() {
+    Route::post('/user/add_album/{id}', 'AlbumController@addAlbum');
+    Route::put('/user/album/user/{id}/edit/{album_id}', 'AlbumController@editAlbum');
+    Route::delete('/user/album/user/{id}/delete/{album_id}', 'AlbumController@deleteAlbum');
+    Route::post('/user/{id}/album/{album_id}/track', 'TrackController@addTrack');
+    Route::patch('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@editTrack');
+    Route::delete('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@deleteTrack');
+    Route::post('/user/{user_id}/playlist', 'PlaylistController@createPlaylist');
+    Route::patch('/user/{user_id}/playlist/{playlist_id}', 'PlaylistController@updatePlaylist');
+});
 Route::get('/user/album/{id}', 'AlbumController@getAllUserAlbums');
 Route::get('/user/album/details/{id}', 'AlbumController@getSingleAlbum');
-Route::put('/user/album/user/{id}/edit/{album_id}', 'AlbumController@editAlbum');
-Route::delete('/user/album/user/{id}/delete/{album_id}', 'AlbumController@deleteAlbum');
-Route::post('/user/{id}/album/{album_id}/track', 'TrackController@addTrack');
-Route::patch('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@editTrack');
-Route::delete('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@deleteTrack');
 Route::get('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@getSingleTrack');
-Route::post('/user/{user_id}/playlist', 'PlaylistController@createPlaylist');
-Route::patch('/user/{user_id}/playlist/{playlist_id}', 'PlaylistController@updatePlaylist');
 Route::get('/user/{user_id}/playlist', 'PlaylistController@getAllUserPlaylists');
 Route::get('/user/playlist', 'PlaylistController@getAllPlaylists');
 Route::get('/user/playlist/{id}', 'PlaylistController@getSinglePlaylist');
@@ -41,6 +60,7 @@ Route::patch('/user/comment/{comment_id}', 'CommentsController@editSingleComment
 Route::delete('/user/comment/{comment_id}', 'CommentsController@deleteSingleComment');
 Route::post('/pay', 'PaymentController@redirectToGateway')->name('pay');
 Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
+});
 
 
 

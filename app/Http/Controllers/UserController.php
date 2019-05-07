@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
+use App\User;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -16,18 +16,26 @@ class UserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function createUser(Request $request) {
-        $this->validate($request, [
-            'username' => 'required|unique:users',
-            'email' => 'required|unique:users',
-            'password' => 'required'
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string',
         ]);
-        $hashedPassword = Hash::make($request->password);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
         $newUser = User::create([
-            'username' => $request->username,
-            'password' => $hashedPassword,
-            'email'    => $request->email
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('password')),
+            'username' => $request->get('username'),
         ]);
-        return response()->json($newUser, 201);
+
+        $token = JWTAuth::fromUser($newUser);
+
+        return response()->json(compact('user','token'),201);
+//        return response()->json($newUser, 201);
     }
     /**
      * Return all users
@@ -81,7 +89,7 @@ class UserController extends Controller
     /**
      * Authenticate a user and return the token if the provided credentials are correct.
      *
-     * @param  \App\Models\User   $user
+     * @param  \App\Models\User1   $user
      *
      * @return mixed
      */
@@ -94,7 +102,7 @@ class UserController extends Controller
         }
         if (Hash::check($request->password, $user->password)) {
             return response()->json([
-                'token' => User::jwt($user)
+                'token' => User1::jwt($user)
             ], 200);
         }
         return response()->json([

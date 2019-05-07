@@ -16,7 +16,7 @@ class Album extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\User');
     }
     /**
      * Local query scope to return albums associated with a user
