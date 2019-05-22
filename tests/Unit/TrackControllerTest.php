@@ -70,6 +70,7 @@ class TrackControllerTest extends TestCase
         $response = $this->json("POST", "/api/user/1/album/1/track", $data, ["CONTENT_TYPE" => "multipart/mixed"]);
         dd($response->getContent());
     }
+    
 
     public function test_user_can_retrieve_tracks() {
         $track = factory(Track::class)->create(
