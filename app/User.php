@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Exception as Exception;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -17,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'username', 'email', 'password', 'premium_user'
     ];
 
     /**
@@ -58,5 +59,39 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * @param Album $album
+     *
+     * @return false|\Illuminate\Database\Eloquent\Model
+     */
+    public function createAlbum(Album $album)
+    {
+        dd("am here");
+
+//        $newAlbum = $this->albums()->save($album);
+
+        try {
+            $newAlbum = $this->albums()->save($album);
+            return response()->json($newAlbum, 201);
+        } catch (Exception $ex) {
+            return response()->json($ex->getMessage(), 400);
+
+        }
+//        return response()->json($newAlbum, 201);
+
+//        if ($newAlbum){
+//            return response()->json($newAlbum, 201);
+//        }
+//        return response()->json("Album already exists", 400);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function albums()
+    {
+        return $this->hasMany(Album::class);
     }
 }

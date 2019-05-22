@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Album;
 use Illuminate\Http\Request;
-use App\Models\Album;
+//use App\Models\Album;
 
 class AlbumController extends Controller
 {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Unicodeveloper\Paystack\Paystack;
-use App\Models\User;
+use App\Models\User1;
 
 class PaymentController extends Controller
 {
@@ -32,7 +32,7 @@ class PaymentController extends Controller
 
         $email = $paymentDetails['data']['customer']['email'];
         if ($paymentDetails['message'] == "Verification successful") {
-            $user = User::where('email', $email)->first();
+            $user = User1::where('email', $email)->first();
 
             if ($user) {
                 $user->premium_user = true;
