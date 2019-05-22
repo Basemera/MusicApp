@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Track;
+//use JD\Cloudder\CloudinaryWrapper as Cloudder;
 
 class TrackController extends Controller
 {
@@ -20,9 +21,9 @@ class TrackController extends Controller
     public function addTrack (Request $request, $album_id, $id) {
         $song_url = "";
         $public_id = "";
-        $this->validate($request, [
-            'title' => 'required',
-        ]);
+       $this->validate($request, [
+           'title' => 'required',
+       ]);
 
         $track = Track::AlbumTracks($album_id)->where('title', strtolower($request->title))->first();
         if ($track) {
@@ -86,7 +87,10 @@ class TrackController extends Controller
     public function getSingleTrack($user_id, $album_id, $track_id) {
         $track = Track::findorFail($track_id);
         $publicId = $track['public_id'];
-        $this->song_url = \Cloudder::secureShow($publicId, ['resource_type' => 'video', 'format' => 'mp3', "width" =>  null, "height"=> null, "crop" => null]);
+        $this->song_url = ["song_url" => $track['url']];
+//        dd($publicId);
+
+//        $this->song_url = \Cloudder::secureShow($publicId, ['resource_type' => 'video', 'format' => 'mp3', "width" =>  null, "height"=> null, "crop" => null]);
         return response()->json($this->song_url, 200);
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Track;
-use App\Playlist;
+use App\Models\Playlist;
 use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
@@ -24,7 +24,6 @@ class PlaylistController extends Controller
             'name' => 'required',
             'tracks' => 'required'
         ]);
-
         $playlist = Playlist::UserPlaylists($user_id)->where('name', strtolower($request->name))->first();
         if ($playlist) {
             return response()->json('Playlist already exists. Do you want to add songs instead', 400);
@@ -32,7 +31,7 @@ class PlaylistController extends Controller
 
         foreach ($request->tracks as $track) {
             $exists = Track::findorFail($track);
-            if (! $exists) {
+            if (!$exists) {
                 return response()->json('Track doesnot exists.' , 400);
             }
         }
@@ -41,7 +40,9 @@ class PlaylistController extends Controller
         $new_playlist->name = strtolower($request->name);
         $new_playlist->tracks = $request->tracks;
         $new_playlist->user_id = $user_id;
-        $new_playlist->save();
+//        dd($user_id);
+
+//        $new_playlist->save();
         return response()->json($new_playlist, 201);
     }
 

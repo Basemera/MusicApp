@@ -5,6 +5,7 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
@@ -21,21 +22,18 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string',
         ]);
-
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->messages(), 400);
         }
 
         $newUser = User::create([
             'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
+            'password' => bcrypt($request->get('password')),
             'username' => $request->get('username'),
         ]);
 
-        $token = JWTAuth::fromUser($newUser);
 
-        return response()->json(compact('user','token'),201);
-//        return response()->json($newUser, 201);
+        return response()->json(($newUser),201);
     }
     /**
      * Return all users
@@ -102,7 +100,7 @@ class UserController extends Controller
         }
         if (Hash::check($request->password, $user->password)) {
             return response()->json([
-                'token' => User1::jwt($user)
+                'token' => User::jwt($user)
             ], 200);
         }
         return response()->json([
@@ -117,10 +115,13 @@ class UserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function logIn(Request $request) {
+        dd("am here");
+
         $this->validate($request, [
             'email'     => 'required|email',
             'password'  => 'required'
         ]);
+        var_dump($request);die();
         return $this->authenticate($request);
     }
 }

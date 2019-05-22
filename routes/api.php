@@ -26,6 +26,7 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
+    Route::post('/register', 'UserController@createUser');
 
 });
 
@@ -36,7 +37,7 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['jwt.verify']], function() {
 
-Route::post('/user/register', 'UserController@createUser');
+//Route::post('/user/register', 'UserController@createUser');
 Route::group(['middleware' => ['premium.verify']], function() {
     Route::post('/user/add_album/{id}', 'AlbumController@addAlbum');
     Route::put('/user/album/user/{id}/edit/{album_id}', 'AlbumController@editAlbum');
