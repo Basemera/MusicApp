@@ -20,16 +20,9 @@ before_script:
   - cp .env.travis .env
   - pear install pear/PHP_CodeSniffer
   - phpenv rehash
-  - nvm install 7.7.1
-  - npm install npm@latest -g
-  - npm install -g jshint
-  - npm install
 
 script:
   - php vendor/bin/phpunit --coverage-text
-  - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
-  - npm run production
-  - jshint resources/assets/js/modules/*
   - mkdir -p build/logs
   - php vendor/bin/phpunit -c phpunit.xml
 
@@ -42,6 +35,5 @@ after_success:
 notifications:
   slack:
     on_success: never
-    on_fail: never
   email:
     - bsmrrachel@gmail.com
