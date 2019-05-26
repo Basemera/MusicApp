@@ -121,7 +121,7 @@ class UserController extends Controller
             'email'     => 'required|email',
             'password'  => 'required'
         ]);
-        var_dump($request);die();
+        // var_dump($request);die();
         return $this->authenticate($request);
     }
 }

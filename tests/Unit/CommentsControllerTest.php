@@ -48,8 +48,7 @@ class CommentsControllerTest extends TestCase
                                                                                 "updated_at",
                                                                                 "created_at",
                                                                                 "id"
-                                                                            ])
-                                                                            ;
+                                                                            ]);
     }
 
     public function test_can_edit_comment() {

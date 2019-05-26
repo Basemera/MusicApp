@@ -79,7 +79,6 @@ class UserControllerTest extends TestCase
         $response = $this->json('POST', '/api/auth/register', [
             "username" => "Doryn123334",
             "email"    => "doryn113223@gmail.com",
-            "password" => "test"
         ]);
 
         $response->assertStatus(400)->assertJsonStructure([
@@ -87,23 +86,27 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-    public function test_user_can_login() {
-//        $user = factory(User::class)->create([
-////            'email' => "doryn113223@gmail.com",
-////            'password' => Hash::make("test"),
-////            'username' => "Doryn123334",        ]);
-////
-///
-        $user = factory(User::class)->create([
-            "username"=> "Raster",
-            "email"=>"doryn113223@gmail.com",
-            "password"=>bcrypt('test')
-        ]);
-
-        $response=$this->json('POST', 'api/auth/login', [
-            "email"    => "doryn113223@gmail.com",
-            "password" => bcrypt("test")
-        ])->assertStatus(200);
-    }
+//    public function test_user_can_login() {
+////        $user = factory(User::class)->create([
+//////            'email' => "doryn113223@gmail.com",
+//////            'password' => Hash::make("test"),
+//////            'username' => "Doryn123334",        ]);
+//////
+/////
+////        $user = factory(User::class)->create([
+////            "username"=> "Raster",
+////            "email"=>"test3@gmail.com",
+////            "password"=>bcrypt('test')
+////        ]);
+//
+//
+//        $response=$this->json('POST', 'api/auth/login', [
+//            "email"    => "test@gmail.com",
+//            "password" => ("test")
+//        ])
+//         ->assertStatus(200)
+//        ;
+////        dd($response->getContent());
+//    }
 
 }

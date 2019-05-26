@@ -1,14 +1,22 @@
-os:
-  - linux
 
 language: php
 
 php:
   - '7.2'
 
+services:
+  - mysql
+
+before_install:
+  - phpenv config-rm xdebug.ini || true
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - printf "\n" | pecl install -f redis
+  - travis_retry composer self-update
+  - mysql -e 'CREATE DATABASE mymusic_test;'
+
 before_script:
   - composer self-update
-  - composer install --no-interaction
+  - composer install --no-interaction --dev
   - cp .env.travis .env
   - pear install pear/PHP_CodeSniffer
   - phpenv rehash
@@ -18,22 +26,22 @@ before_script:
   - npm install
 
 script:
-  - vendor/bin/phpunit --coverage-text
+  - php vendor/bin/phpunit --coverage-text
   - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
   - npm run production
   - jshint resources/assets/js/modules/*
   - mkdir -p build/logs
   - php vendor/bin/phpunit -c phpunit.xml
 
-  after_success:
-    - travis_retry php vendor/bin/php-coveralls
-    # or enable logging
-    - travis_retry php vendor/bin/php-coveralls -v
+after_success:
+  - travis_retry php vendor/bin/php-coveralls
+  # or enable logging
+  - travis_retry php vendor/bin/php-coveralls -v
 
 
-  notifications:
-    slack:
-      on_success: never
-      on_fail: never
-    email:
-      - bsmrrachel@gmail.com
+notifications:
+  slack:
+    on_success: never
+    on_fail: never
+  email:
+    - bsmrrachel@gmail.com
