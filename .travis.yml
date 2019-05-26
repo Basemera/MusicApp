@@ -1,0 +1,41 @@
+
+language: php
+
+php:
+  - '7.2'
+
+services:
+  - mysql
+
+before_install:
+  - phpenv config-rm xdebug.ini || true
+  - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - printf "\n" | pecl install -f redis
+  - travis_retry composer self-update
+  - mysql -e 'CREATE DATABASE mymusic_test;'
+
+before_script:
+  - composer self-update
+  - composer install --no-interaction --dev
+  - cp .env.travis .env
+  - pear install pear/PHP_CodeSniffer
+  - phpenv rehash
+
+script:
+  - php vendor/bin/phpunit --coverage-text
+  - mkdir -p build/logs
+  - php vendor/bin/phpunit -c phpunit.xml
+  - php artisan key:generate --force
+  - php artisan jwt:secret --force
+
+after_success:
+  - travis_retry php vendor/bin/php-coveralls
+  # or enable logging
+  - travis_retry php vendor/bin/php-coveralls -v
+
+
+notifications:
+  slack:
+    on_success: never
+  email:
+    - bsmrrachel@gmail.com

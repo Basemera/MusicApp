@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,7 +18,7 @@ class Playlist extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\User');
     }
 
     /**
@@ -31,4 +31,5 @@ class Playlist extends Model
     public function scopeUserPlaylists($query, $user_id)
     {
         return $query->where('user_id', $user_id);
-    }}
+    }
+}
