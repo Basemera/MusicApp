@@ -23,9 +23,10 @@ before_script:
 
 script:
   - php vendor/bin/phpunit --coverage-text
-  - phpcs --ignore=app/Http/Controllers/Auth,app/Http/Controllers/Controller.php app/Http/Controllers
   - mkdir -p build/logs
   - php vendor/bin/phpunit -c phpunit.xml
+  - php artisan key:generate --force
+  - php artisan jwt:secret --force
 
 after_success:
   - travis_retry php vendor/bin/php-coveralls
