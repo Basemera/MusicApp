@@ -23,18 +23,14 @@ before_script:
   - phpenv rehash
 
 script:
-  - php vendor/bin/phpunit --coverage-text
-  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-  - mkdir -p build/logs
   - php vendor/bin/phpunit -c phpunit.xml
   - php artisan key:generate --force
   - php artisan jwt:secret --force
+  - mkdir -p build/logs
+  - phpunit --coverage-clover build/logs/clover.xml
 
-after_success:
-  - travis_retry php vendor/bin/php-coveralls
-  # or enable logging
-  - travis_retry php vendor/bin/php-coveralls -v
-
+after_script:
+ - php vendor/bin/coveralls -v
 
 notifications:
   slack:
