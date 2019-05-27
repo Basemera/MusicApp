@@ -25,6 +25,8 @@ class PlaylistController extends Controller
             'tracks' => 'required'
         ]);
         $playlist = Playlist::UserPlaylists($user_id)->where('name', strtolower($request->name))->first();
+//        $playlist = Playlist::select('id')->where('user_id', $user_id)->where('name', strtolower($request->name))->first();
+
         if ($playlist) {
             return response()->json('Playlist already exists. Do you want to add songs instead', 400);
         }
@@ -40,9 +42,8 @@ class PlaylistController extends Controller
         $new_playlist->name = strtolower($request->name);
         $new_playlist->tracks = $request->tracks;
         $new_playlist->user_id = $user_id;
-//        dd($user_id);
 
-//        $new_playlist->save();
+        $new_playlist->save();
         return response()->json($new_playlist, 201);
     }
 
@@ -74,6 +75,8 @@ class PlaylistController extends Controller
             }
             $playlist->update($request->all());
             return response()->json($playlist, 200);
+        } else {
+            return response()->json("No tracks to add please add some", 400);
         }
     }
 
@@ -86,10 +89,6 @@ class PlaylistController extends Controller
         return response()->json($playlists, 200);
     }
 
-    public function getAllPlaylists() {
-        $playlists = Playlist::all();
-        return response()->json($playlists, 200);
-    }
     /**
      * Return details of a single playlist
      * @param $id

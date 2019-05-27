@@ -40,7 +40,13 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 //Route::post('/user/register', 'UserController@createUser');
 Route::group(['middleware' => ['premium.verify']], function() {
     Route::post('/user/add_album/{id}', 'AlbumController@addAlbum');
+    Route::get('/user/{id}', 'UserController@getSingleUser');
+    Route::get('/users', 'UserController@getAllUsers');
+    Route::put('/user/{id}', 'UserController@update');
+    Route::delete('/user/{id}', 'UserController@deleteUser');
     Route::put('/user/album/user/{id}/edit/{album_id}', 'AlbumController@editAlbum');
+    Route::get('/user/{id}/album', 'AlbumController@getUserAlbum');
+    Route::put('/user/albums', 'AlbumController@getAllAlbums');
     Route::delete('/user/album/user/{id}/delete/{album_id}', 'AlbumController@deleteAlbum');
     Route::post('/user/{id}/album/{album_id}/track', 'TrackController@addTrack');
     Route::patch('/user/{user_id}/album/{album_id}/track/{id}', 'TrackController@editTrack');

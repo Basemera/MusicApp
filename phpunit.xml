@@ -18,9 +18,19 @@
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
+        <whitelist processUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">./app/Http/Controllers</directory>
+            <directory suffix=".php">./app/Models</directory>
+             <exclude>
+            <directory suffix=".php">.app/Http/Middleware</directory>
+                 <file>./app/Http/Controllers/AuthController.php</file>
+                 <file>./app/Http/Controllers/TrackController.php</file>
+                 <file>./app/Http/Controllers/PaymentController.php</file>
+                 <directory suffix=".php">./app/Http/Controllers/Auth</directory>
+
+             </exclude>
         </whitelist>
+
     </filter>
 
     <logging>

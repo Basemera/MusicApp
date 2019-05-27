@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Album;
+use App\Models\Album;
 use Illuminate\Http\Request;
-//use App\Models\Album;
 
 class AlbumController extends Controller
 {
@@ -19,7 +18,10 @@ class AlbumController extends Controller
             'name' => 'required',
             'released_on' => 'nullable'
         ]);
+//        dd($user_id);
+
         $albums = Album::select('id')->where('user_id', $user_id)->where('name', strtolower($request->name))->first();
+//        dd($albums);
         if ($albums) {
             return response()->json("Album already exists", 400);
         }
@@ -35,7 +37,8 @@ class AlbumController extends Controller
      * @param $user_id
      * @return mixed
      */
-    public function getUser($user_id) {
+    public function getUserAlbum($user_id) {
+//        dd($user_id);
         return Album::find($user_id)->user;
     }
     /**
@@ -47,10 +50,6 @@ class AlbumController extends Controller
         return response()->json($albums, 200);
     }
 
-    public function getAllAlbums() {
-        $albums = Album::all();
-        return response()->json($albums, 200);
-    }
     /**
      * Return details of a single album
      * @param $id
@@ -70,9 +69,6 @@ class AlbumController extends Controller
      */
     public function editAlbum(Request $request, $id, $album_id ) {
         $album = Album::UserAlbums($id)->findorFail($album_id);
-        if (!$album) {
-            return response()->json("Album doesnot exist", 400);
-        }
         $album->update($request->all());
         return response()->json($album, 200);
     }
@@ -84,9 +80,6 @@ class AlbumController extends Controller
      */
     public function deleteAlbum($id, $album_id) {
         $album = Album::UserAlbums($id)->findorFail($album_id);
-        if (!$album) {
-            return response()->json("Album doesnot exist", 400);
-        }
         $album->delete();
         return response()->json($album->name.'successfully deleted', 200);
     }

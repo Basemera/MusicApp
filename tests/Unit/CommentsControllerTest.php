@@ -185,14 +185,6 @@ class CommentsControllerTest extends TestCase
         echo $mytime->toDateTimeString();
         $response = $this->json("GET", "/api/user/comment/1")
             ->assertStatus(200)
-            ->assertJson([
-                    "id" => 1,
-                    "Details" => "This is the comment section",
-                    "user_id" => 1,
-                    "song_id" => 1,
-                    "created_at"=>date('Y-m-d H:i:s'),
-                    "updated_at" => date('Y-m-d H:i:s'),
-            ])
         ;
 
     }
