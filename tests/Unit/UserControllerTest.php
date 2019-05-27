@@ -15,7 +15,7 @@ use Faker\Generator as Faker;
 class UserControllerTest extends TestCase
 {
     use DatabaseMigrations;
-//    use WithoutMiddleware;
+    use WithoutMiddleware;
     /**
      * A basic unit test example.
      *
@@ -86,27 +86,87 @@ class UserControllerTest extends TestCase
         ]);
     }
 
-//    public function test_user_can_login() {
-////        $user = factory(User::class)->create([
-//////            'email' => "doryn113223@gmail.com",
-//////            'password' => Hash::make("test"),
-//////            'username' => "Doryn123334",        ]);
-//////
-/////
-////        $user = factory(User::class)->create([
-////            "username"=> "Raster",
-////            "email"=>"test3@gmail.com",
-////            "password"=>bcrypt('test')
-////        ]);
-//
-//
-//        $response=$this->json('POST', 'api/auth/login', [
-//            "email"    => "test@gmail.com",
-//            "password" => ("test")
-//        ])
-//         ->assertStatus(200)
-//        ;
-////        dd($response->getContent());
-//    }
+    public function test_user_can_get_all_users() {
+        $user = factory(User::class)->create([
+            'email' => "doryn113223@gmail.com",
+            'password' => bcrypt("test"),
+            'username' => "Doryn123334",
+            ]);
 
+///
+        $user2 = factory(User::class)->create([
+            "username"=> "Raster",
+            "email"=>"test3@gmail.com",
+            "password"=>bcrypt('test')
+        ]);
+
+
+        $response=$this->json('GET', 'api/users')
+         ->assertStatus(200)
+        ;
+    }
+
+    public function test_user_can_update_details() {
+        $user = factory(User::class)->create([
+            'email' => "doryn113223@gmail.com",
+            'password' => bcrypt("test"),
+            'username' => "Doryn123334",
+        ]);
+
+        $data = [
+            'username' => 'Phiona'
+        ];
+
+        $response=$this->json('PUT', 'api/user/1', $data)
+            ->assertStatus(200)
+        ;
+    }
+
+    public function test_user_cannnot_update_non_existant_user() {
+        $user = factory(User::class)->create([
+            'email' => "doryn113223@gmail.com",
+            'password' => bcrypt("test"),
+            'username' => "Doryn123334",
+        ]);
+
+        $data = [
+            'username' => 'Phiona'
+        ];
+
+        $response=$this->json('PUT', 'api/user/2', $data)
+            ->assertStatus(404)
+            ->assertJson(["message" => "No query results for model [App\\User] 2"])
+        ;
+    }
+
+    public function test_can_get_single_user() {
+        $user = factory(User::class)->create([
+            'email' => "doryn113223@gmail.com",
+            'password' => bcrypt("test"),
+            'username' => "Doryn123334",
+        ]);
+        $response=$this->json('GET', 'api/user/1')
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                "email",
+                "password",
+                "username",
+                "updated_at",
+                "created_at",
+                "id"
+            ])
+        ;
+    }
+
+    public function test_can_delete_user() {
+        $user = factory(User::class)->create([
+            'email' => "doryn113223@gmail.com",
+            'password' => bcrypt("test"),
+            'username' => "Doryn123334",
+        ]);
+        $response=$this->json('DELETE', 'api/user/1')
+            ->assertStatus(200)
+            ->assertSeeText("successfully deleted")
+        ;
+    }
 }

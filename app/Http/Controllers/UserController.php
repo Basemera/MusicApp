@@ -60,9 +60,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id) {
         $user = User::findorFail($id);
-        if (!$user) {
-            return response()->json('User doesnot exist', 404);
-        }
         $user->update($request->all());
         return response()->json($user, 200);
     }
@@ -82,46 +79,6 @@ class UserController extends Controller
      */
     public function deleteUser($id) {
         User::findorFail($id)->delete();
-        response()->json('successfully deleted', 200);
-    }
-    /**
-     * Authenticate a user and return the token if the provided credentials are correct.
-     *
-     * @param  \App\Models\User1   $user
-     *
-     * @return mixed
-     */
-    public function authenticate(Request $request) {
-        $user = User::where('email', $request->email)->first();
-        if (!$user) {
-            return response()->json([
-                'error' => 'Email does not exist.'
-            ], 400);
-        }
-        if (Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'token' => User::jwt($user)
-            ], 200);
-        }
-        return response()->json([
-            'error' => 'Email or password is wrong.'
-        ], 400);
-    }
-    /**
-     * Login in a user and return token
-     *
-     * @param Request $request
-     * @return mixed
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function logIn(Request $request) {
-        dd("am here");
-
-        $this->validate($request, [
-            'email'     => 'required|email',
-            'password'  => 'required'
-        ]);
-        // var_dump($request);die();
-        return $this->authenticate($request);
+        return response()->json('successfully deleted', 200);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,7 +35,7 @@ class Album extends Model
      * @return \Illuminate\Database\Eloquent\Relations\hasmany
      */
     public function tracks() {
-        return $this->hasMany('App\Models\tracks');
+        return $this->hasMany('App\Models\Track');
     }
 
 }
