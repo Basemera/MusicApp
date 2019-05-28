@@ -8,7 +8,7 @@ services:
   - mysql
 
 before_install:
-  - phpenv config-rm xdebug.ini || true
+#  - phpenv config-rm xdebug.ini || true
   - echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - printf "\n" | pecl install -f redis
   - composer require php-coveralls/php-coveralls
@@ -19,6 +19,7 @@ before_script:
   - composer self-update
   - composer install --no-interaction --dev
   - cp .env.travis .env
+#  - pecl install xdebug
   - pear install pear/PHP_CodeSniffer
   - phpenv rehash
 
@@ -26,11 +27,12 @@ script:
   - php vendor/bin/phpunit -c phpunit.xml
   - php artisan key:generate --force
   - php artisan jwt:secret --force
-  - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
+  - mkdir -p /home/travis/build/Basemera/MusicApp/build/logs
+  - chmod 777 /home/travis/build/Basemera/MusicApp/build/logs
+  - phpunit --coverage-clover /home/travis/build/Basemera/MusicApp/build/logs/clover.xml
 
 after_script:
- - php vendor/bin/coveralls -v
+ - php vendor/bin/php-coveralls -v
 
 notifications:
   slack:
