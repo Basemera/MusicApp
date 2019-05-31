@@ -30,9 +30,9 @@ Route::group([
 
 });
 
-Route::get('/user', function (Request $request) {
+Route::get('/', function (Request $request) {
 //    var_dump(($request));
-    return "Memmmmmme";
+    return response()->json(["message"=>"Welcome to basemera-music. Your online music store"]);
 });
 
 Route::group(['middleware' => ['jwt.verify']], function() {
