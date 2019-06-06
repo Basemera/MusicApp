@@ -10,7 +10,7 @@ Find it here live [`basemera-music`](https://basemera-music.herokuapp.com/api/)
 
 [`Composer`](https://getcomposer.org/) - Composer is required for the libraries and dependencies
 
-##Clone 
+## Clone 
 ```git clone https://github.com/Basemera/MusicApp.git```
 
 ## Installation
