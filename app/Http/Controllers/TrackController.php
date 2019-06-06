@@ -9,6 +9,8 @@ use App\Models\Track;
 
 class TrackController extends Controller
 {
+    public $song_url = "";
+    public $public_id = "";
     //
     /**
      * Add a track
@@ -18,9 +20,9 @@ class TrackController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function addTrack (Request $request, $album_id, $id) {
-        $song_url = "";
-        $public_id = "";
+    public function addTrack (Request $request, $id, $album_id ) {
+//        $song_url = "";
+//        $public_id = "";
        $this->validate($request, [
            'title' => 'required',
        ]);
